@@ -62,7 +62,11 @@ try:
         counter = counter+1
         time.sleep(WAIT_TIME)
         ds = get_download_status(get_url+'/'+download_id)
-
+    #AF Inserting the line below eliminated hung files when making small downloads.
+    #The ds call on line 58 would report 100%, but the file name hadn't been generated yet.
+    #This line gave the code a chance to get the file name before hitting line 70.
+    #ds = get_download_status(get_url+'/'+download_id)
+        
     if ds['file'] is not None:
         print('Downloading file: '+ds['file'])
         filedata = urllib2.urlopen(ds['file'])
